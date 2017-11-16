@@ -63,9 +63,9 @@ pip install numpy
 ```
 python min-char-rnn.py
 ```
-* If you don't want iterations to be printed, use
+* If you want iterations to be printed, use
 ```
-python min-char-rnn.py --noiter
+python min-char-rnn.py --iter
 ```
 
 # Inputs
