@@ -20,7 +20,7 @@ Question = raw_input('Greetings. Sophocles at your service. What can I do for yo
 if "novel" in Question:
   data = open('stud.txt', 'r').read() # should be simple plain text file
 if "Wikipedia" in Question:
-  print("What would you like me to write about? List three topics (they all have to be Wikipedia articles!")
+  print("What would you like me to write about? List three topics (they all have to be Wikipedia articles!"))
   for value in range(0,2):
     WikiQuery = raw_input()
     if ' ' in WikiQuery:
