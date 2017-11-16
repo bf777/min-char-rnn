@@ -13,7 +13,7 @@ parser.add_argument("--iter", help="prints iters during script",
 
 QueryList = []
 
-Question = raw_input('Greetings. Sophocles at your service. What can I do for you today? ')
+Question = raw_input('Greetings. Sophocles at your service. What can I do for you today? I\'m best at writing Wikipedia articles and novels. ')
 
 
 # data I/O
@@ -146,7 +146,7 @@ while True:
   n += 1 # iteration counter
 
   if n == 100000:
-      print("Here's what I've concocted so far.")
+      print("Here's what I've concocted so far. Open up Sophocles100k.txt! ")
       sample_ix = sample(hprev, inputs[0], 5000)
       txt = ''.join(ix_to_char[ix] for ix in sample_ix)
       textwrite = open ("Sophocles100k.txt" , "w")
@@ -154,7 +154,7 @@ while True:
       textwrite.close()
 
   if n == 400000:
-      print("I just keep on learning. Check it out!")
+      print("I just keep on learning. Check it out in Sophocles400k.txt!")
       sample_ix = sample(hprev, inputs[0], 5000)
       txt = ''.join(ix_to_char[ix] for ix in sample_ix)
       open ("sample400k-travel.txt" , "w")
