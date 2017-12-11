@@ -55,15 +55,23 @@ Here i is the indice of 1 in vector t.
 
 # Train RNN Model
 
-* Install numpy
+* Install numpy (basis for the CNN)
 ```
 pip install numpy
+```
+* Install Wikipedia (package for parsing Wikipedia articles)
+```
+pip install wikipedia
+```
+* Install argparse if you don't already have it
+```
+pip install argparse
 ```
 * Run this code, and follow the instructions onscreen
 ```
 python min-char-rnn.py
 ```
-* If you want iterations to be printed, use
+* If you want iterations to be printed to the terminal, use
 ```
 python min-char-rnn.py --iter
 ```
