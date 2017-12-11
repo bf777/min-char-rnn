@@ -1,46 +1,49 @@
+import wikipedia
+import numpy as np
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("--iter", help="prints iters during script",
+                    action="store_true") # use --iter argument at runtime to show iterations
+
+i = str(0)
+Question = raw_input('Greetings. Sophocles at your service. What can I do for you today? ')
+
+# data I/O
+def remove_non_ascii(text):
+    return ''.join(i for i in text if ord(i)<128) # nonascii stripping function
+if "novel" in Question:
+  data = open('_chat.txt', 'r').read() # should be simple plain text file
+if "Wikipedia" in Question:
+  print("What would you like me to write about? List three topics (they all have to be Wikipedia articles!)") # doesn't handle disambiguation pages yet
+  for value in range(0,3):
+      WikiQuery = raw_input()
+      wpage = wikipedia.page(WikiQuery) # gets Wikipedia article
+      wcontent = wpage.content
+      wcontent = remove_non_ascii(wcontent) # strips nonascii characters from article
+      temp = open("wikitemp.txt", "w")
+      tempwrite = temp.write(wcontent) # hacky solution to buffer Wikipedia article
+      temp = open("wikitemp.txt", "r")
+      make = open("wikiq%s.txt" % i, "w") # also hacky, buffers each article in a separate text file
+      i = int(i)
+      i+=1
+      i = str(i)
+      temptransfer = temp.read()
+      make.write(temptransfer)
+      temp.close()
+      make.close()
+  filenames = ["wikiq0.txt","wikiq1.txt","wikiq2.txt"]
+  with open('wikiq.txt', 'w') as outfile: # concatenates the three input articles
+      for fname in filenames:
+          with open(fname) as infile:
+              for line in infile:
+                  outfile.write(line)
+
+data = open('wikiq.txt', 'r').read()
+
 """
 Minimal character-level Vanilla RNN model. Written by Andrej Karpathy (@karpathy)
 BSD License
 """
-import numpy as np
-import urllib2  # the lib that handles the url stuff
-import re
-import argparse
-parser = argparse.ArgumentParser()
-parser.add_argument("--iter", help="prints iters during script",
-                    action="store_true")
-
-
-QueryList = []
-
-Question = raw_input('Greetings. Sophocles at your service. What can I do for you today? I\'m best at writing Wikipedia articles and novels. ')
-
-
-# data I/O
-if "novel" in Question:
-  data = open('stud.txt', 'r').read() # should be simple plain text file
-if "Wikipedia" in Question:
-  print("What would you like me to write about? List three topics (they all have to be Wikipedia articles!"))
-  for value in range(0,2):
-    WikiQuery = raw_input()
-    if ' ' in WikiQuery:
-      WikiQuery = WikiQuery.replace(' ','%20')
-    QueryList.append('https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles=%s' % WikiQuery)
-    WikiGet = urllib2.urlopen(QueryList[value])
-
-    make = open("wikiq.txt" , "w")
-    content = WikiGet.read()
-    content = re.sub(r'(.*)(?="extract":)', '', content)
-    content = re.sub(r'("extract":)', '', content)
-    content = re.sub(r'(})', '', content)
-    content = re.sub(r'(/n)', '', content)
-    make.write(content)
-    make.close()
-
-  data = open('wikiq.txt', 'r').read()  # should be simple plain text file
-
-
-
 
 chars = list(set(data))
 data_size, vocab_size = len(data), len(chars)
@@ -145,19 +148,21 @@ while True:
   p += seq_length # move data pointer
   n += 1 # iteration counter
 
+  """
+  """
+
   if n == 100000:
-      print("Here's what I've concocted so far. Open up Sophocles100k.txt! ")
+      print("Here's what I've concocted so far.")
       sample_ix = sample(hprev, inputs[0], 5000)
       txt = ''.join(ix_to_char[ix] for ix in sample_ix)
-      textwrite = open ("Sophocles100k.txt" , "w")
+      textwrite = open ("Sophocles100k.txt" , "w") # the fruits of the CNN's work
       textwrite.write('----\n %s \n----' % (txt, ))
       textwrite.close()
 
   if n == 400000:
-      print("I just keep on learning. Check it out in Sophocles400k.txt!")
+      print("I just keep on learning. Check it out!")
       sample_ix = sample(hprev, inputs[0], 5000)
       txt = ''.join(ix_to_char[ix] for ix in sample_ix)
-      open ("sample400k-travel.txt" , "w")
-      textwrite_2 = open ("Sophocles400k.txt" , "w")
+      textwrite_2 = open ("Sophocles400k.txt" , "w") # the fruits of the CNN's work
       textwrite_2.write('----\n %s \n----' % (txt, ))
       textwrite_2.close()
